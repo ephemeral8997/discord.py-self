@@ -1,44 +1,49 @@
+
 discord.py-self
-================
+===============
 
 .. image:: https://img.shields.io/endpoint?color=neon&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fdpy_self
    :target: https://t.me/dpy_self
    :alt: Telegram chat
+
 .. image:: https://img.shields.io/pypi/v/discord.py-self.svg
    :target: https://pypi.python.org/pypi/discord.py-self
    :alt: PyPI version info
+
 .. image:: https://img.shields.io/pypi/pyversions/discord.py.svg
    :target: https://pypi.python.org/pypi/discord.py-self
    :alt: PyPI supported Python versions
+
 .. image:: https://img.shields.io/pypi/dm/discord.py-self.svg
    :target: https://pypi.python.org/pypi/discord.py-self
    :alt: PyPI downloads per month
 
 A modern, easy to use, feature-rich, and async ready API wrapper for Discord's user API written in Python.
 
-| **Note:**
-| Automating user accounts is against the Discord ToS. This library is a proof of concept and I cannot recommend using it. Do so at your own risk.
+**Note:**  
+Automating user accounts is against the Discord ToS. This library is a proof of concept and I cannot recommend using it. Do so at your own risk.
 
 Fork Changes
 ------------
+This fork uses an exact replica of commit `20ae80b3` from the original [`dolfies/discord.py-self`](https://github.com/dolfies/discord.py-self),
+which is the last commit to use `aiohttp` before transitioning to `curl-cffi`.  
+My goal is to maintain and eventually optimize it beyond all prior limits.
 
-These changes have become too numerous to mention, so check out our `docs <https://discordpy-self.readthedocs.io/en/latest/index.html>`_.
+Check out our `docs <https://discordpy-self.readthedocs.io/en/latest/index.html>`_ for more.
 
-**Credits:**
-
-- `Rapptz <https://github.com/Rapptz>`_ for the original library this fork is based on. Without it, the project would not exist.
-- `arandomnewaccount <https://www.reddit.com/user/obviouslymymain123/>`_ for help when the project was first started.
+Credits:
+--------
+- `Rapptz <https://github.com/Rapptz>`_ – Creator of the original library.
+- `arandomnewaccount <https://www.reddit.com/user/obviouslymymain123/>`_ – Helped in early development.
 
 Key Features
--------------
-
+------------
 - Modern Pythonic API using ``async`` and ``await``.
 - Proper rate limit handling.
 - Optimised in both speed and memory.
 - Mostly compatible with the upstream ``discord.py``.
 - Prevents user account automation detection.
-- Implements vast amounts of the user account-specific API. For a non-exhaustive list:
-
+- Implements vast amounts of the user account-specific API:
   * Sessions
   * Read states
   * Connections
@@ -47,109 +52,95 @@ Key Features
   * Protobuf user settings
   * Application/team management
   * Store/SKUs/entitlements
-  * Billing (e.g. subscriptions, payments, boosts, promotions, etc.)
+  * Billing (subscriptions, payments, boosts, promotions)
   * Interactions (slash commands, buttons, etc.)
 
 Installing
 ----------
-
 **Python 3.8 or higher is required.**
 
-To install the library without full voice support, you can just run the following command:
+A `virtual environment <https://docs.python.org/3/library/venv.html>`_ is highly recommended, especially on Linux systems.
 
-.. note::
-
-    A `Virtual Environment <https://docs.python.org/3/library/venv.html>`__ is recommended to install
-    the library, especially on Linux where the system Python is externally managed and restricts which
-    packages you can install on it.
-
+Without voice support:
 
 .. code:: sh
 
-    # Linux/macOS
-    python3 -m pip install -U discord.py-self
+   # Linux/macOS
+   python3 -m pip install -U discord.py-self
 
-    # Windows
-    py -3 -m pip install -U discord.py-self
+   # Windows
+   py -3 -m pip install -U discord.py-self
 
-Otherwise to get voice support you should run the following command:
-
-.. code:: sh
-
-    # Linux/macOS
-    python3 -m pip install -U "discord.py-self[voice]"
-
-    # Windows
-    py -3 -m pip install -U discord.py-self[voice]
-
-
-To install the development version, do the following:
+With voice support:
 
 .. code:: sh
 
-    $ git clone https://github.com/dolfies/discord.py-self
-    $ cd discord.py-self
-    $ python3 -m pip install -U .[voice]
+   # Linux/macOS
+   python3 -m pip install -U "discord.py-self[voice]"
 
+   # Windows
+   py -3 -m pip install -U discord.py-self[voice]
+
+To install the development version:
+
+.. code:: sh
+
+   git clone https://github.com/ephemeral8997/discord.py-self
+   cd discord.py-self
+   python3 -m pip install -U .[voice]
 
 Optional Packages
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+- `PyNaCl <https://pypi.org/project/PyNaCl/>`_ – Required for voice support
 
-* `PyNaCl <https://pypi.org/project/PyNaCl/>`__ (for voice support)
+On Linux, you must also install:
 
-Please note that on Linux installing voice you must install the following packages via your favourite package manager (e.g. ``apt``, ``dnf``, etc) before running the above commands:
-
-* libffi-dev (or ``libffi-devel`` on some systems)
-* python-dev (e.g. ``python3.6-dev`` for Python 3.6)
+- `libffi-dev` (or `libffi-devel`)
+- `python-dev` (e.g., `python3.8-dev`)
 
 Using with Upstream
-~~~~~~~~~~~~~~~~~~~~
-
-If you would like to use the library alongside upstream ``discord.py``, you can install ``selfcord.py`` instead of ``discord.py-self``. Check out the `renamed branch <https://github.com/dolfies/discord.py-self/blob/renamed/README.rst>`_ for more information.
+~~~~~~~~~~~~~~~~~~~
+To use alongside upstream ``discord.py``, install ``selfcord.py`` instead.  
+See the `renamed branch <https://github.com/dolfies/discord.py-self/blob/renamed/README.rst>`_ for more.
 
 Quick Example
---------------
-
+-------------
 .. code:: py
 
-    import discord
+   import discord
 
-    class MyClient(discord.Client):
-        async def on_ready(self):
-            print('Logged on as', self.user)
+   class MyClient(discord.Client):
+       async def on_ready(self):
+           print('Logged on as', self.user)
 
-        async def on_message(self, message):
-            # only respond to ourselves
-            if message.author != self.user:
-                return
+       async def on_message(self, message):
+           if message.author != self.user:
+               return
+           if message.content == 'ping':
+               await message.channel.send('pong')
 
-            if message.content == 'ping':
-                await message.channel.send('pong')
-
-    client = MyClient()
-    client.run('token')
+   client = MyClient()
+   client.run('token')
 
 Bot Example
-~~~~~~~~~~~~~
-
+~~~~~~~~~~~
 .. code:: py
 
-    import discord
-    from discord.ext import commands
+   import discord
+   from discord.ext import commands
 
-    bot = commands.Bot(command_prefix='>', self_bot=True)
+   bot = commands.Bot(command_prefix='>', self_bot=True)
 
-    @bot.command()
-    async def ping(ctx):
-        await ctx.send('pong')
+   @bot.command()
+   async def ping(ctx):
+       await ctx.send('pong')
 
-    bot.run('token')
+   bot.run('token')
 
-You can find more examples in the examples directory.
+More examples can be found in the examples directory.
 
 Links
-------
-
+-----
 - `Documentation <https://discordpy-self.readthedocs.io/en/latest/index.html>`_
 - `Project updates <https://t.me/dpy_self>`_
 - `Discussion & support <https://t.me/dpy_self_discussions>`_
