@@ -13,9 +13,11 @@ A modern, easy to use, feature-rich, and async ready API wrapper for Discord's u
 ## Fork Notice
 
 This is a **personal fork**: [`ephemeral8997/discord.py-self`](https://github.com/ephemeral8997/discord.py-self)  
-**Build:** `exact-build` — based on a version prior to the shift from `aiohttp` to `cffi`.
+based on a version prior to the shift from `aiohttp` to `cffi`.
 
 Created primarily for **personal use**, but contributions via pull requests or issues are absolutely welcome.
+
+⚠️ **Archived since I no longer need to strictly stick to aiohttp only operations anymore?**
 
 ## Key Features
 
